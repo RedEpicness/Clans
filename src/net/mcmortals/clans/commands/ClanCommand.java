@@ -8,9 +8,10 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 public class ClanCommand extends net.md_5.bungee.api.plugin.Command{
 
     Main clans;
+    ComponentBuilder prefix = new ComponentBuilder("[").color(ChatColor.DARK_RED).append("Clan").color(ChatColor.RED).append("] ").color(ChatColor.DARK_RED);
 
     public ClanCommand(Main This) {
-        super("clan", "Clans.default");
+        super("clan", "");
         clans = This;
     }
 
@@ -24,15 +25,15 @@ public class ClanCommand extends net.md_5.bungee.api.plugin.Command{
         String arg1 = args[0];
         if(arg1.equals("help")){
             if(args.length == 1){
-                sender.sendMessage(new ComponentBuilder("/clan help <command>").color(ChatColor.GOLD).append(" - ")
+                sender.sendMessage(prefix.append("/clan help <command>").color(ChatColor.GOLD).append(" - ")
                         .color(ChatColor.AQUA).append("Displays help for that command.").color(ChatColor.YELLOW).create());
-                sender.sendMessage(new ComponentBuilder("/clan create").color(ChatColor.GOLD).append(" - ")
+                sender.sendMessage(prefix.append("/clan create").color(ChatColor.GOLD).append(" - ")
                         .color(ChatColor.AQUA).append("Creates a clan.").color(ChatColor.YELLOW).create());
-                sender.sendMessage(new ComponentBuilder("/clan placeholder1").color(ChatColor.GOLD).append(" - ")
+                sender.sendMessage(prefix.append("/clan placeholder1").color(ChatColor.GOLD).append(" - ")
                         .color(ChatColor.AQUA).append("placeholder1").color(ChatColor.YELLOW).create());
-                sender.sendMessage(new ComponentBuilder("/clan placeholder2").color(ChatColor.GOLD).append(" - ")
+                sender.sendMessage(prefix.append("/clan placeholder2").color(ChatColor.GOLD).append(" - ")
                         .color(ChatColor.AQUA).append("placeholder2").color(ChatColor.YELLOW).create());
-                sender.sendMessage(new ComponentBuilder("/clan placeholder3").color(ChatColor.GOLD).append(" - ")
+                sender.sendMessage(prefix.append("/clan placeholder3").color(ChatColor.GOLD).append(" - ")
                         .color(ChatColor.AQUA).append("placeholder3").color(ChatColor.YELLOW).create());
                 return;
             }
