@@ -1,9 +1,15 @@
 package net.mcmortals.clans.commands;
 
+import net.mcmortals.clans.Clan;
 import net.mcmortals.clans.Main;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
 
 public class ClanCommand extends net.md_5.bungee.api.plugin.Command{
 
@@ -27,7 +33,6 @@ public class ClanCommand extends net.md_5.bungee.api.plugin.Command{
         }
         String arg1 = args[0];
         if(arg1.equals("help")){
-
             if(args.length == 1){
                 sender.sendMessage(prefix().append("----- ").color(ChatColor.AQUA).append("Clans help")
                         .color(ChatColor.GOLD).append(" -----").color(ChatColor.AQUA).create());
@@ -77,6 +82,54 @@ public class ClanCommand extends net.md_5.bungee.api.plugin.Command{
                 sender.sendMessage(prefix().append("Unknown argument: ").color(ChatColor.RED).append(arg2).color(ChatColor.AQUA).create());
             }
 
+        }
+        else if(arg1.equals("create")){
+            if(args[1] == null){
+                sender.sendMessage(prefix().append("Usage: ").color(ChatColor.GOLD).append("/guild create <name>")
+                        .color(ChatColor.AQUA).create());
+            }
+            else{
+                String name = args[1];
+                Clan c;
+                try{
+                    Statement s = clans.c.createStatement();
+                    s.executeQuery("INSERT INTO clanlist VALUES ("+clans.clans.size()+", "+name+", 0);");
+
+                    c = new Clan(clans, 0, name, clans.clans.size());
+                    clans.clans.set(c.getId(), c);
+                    c.addPlayer((ProxiedPlayer)sender);
+                    s.close();
+                }
+                catch(SQLException e){
+                    clans.getLogger().log(Level.WARNING, e.getMessage());
+                    sender.sendMessage(prefix().append("SQL Error!").color(ChatColor.DARK_RED).create());
+                    return;
+                }
+                sender.sendMessage(prefix().append("Succesfully created clan: ").color(ChatColor.GREEN).append(name).color(ChatColor.GOLD).append(" ID:"+c.getId()).create());
+            }
+        }
+        else if(arg1.equals("join")){
+            if(args[1] == null){
+                sender.sendMessage(prefix().append("Usage: ").color(ChatColor.GOLD).append("/guild join <id>").color(ChatColor.AQUA).create());
+            }
+            else{
+                int id;
+                try{
+                    id = Integer.parseInt(args[1]);
+                }
+                catch(Exception e){
+                    sender.sendMessage(prefix().append(args[1]+" is not a number!").color(ChatColor.DARK_RED).create());
+                    return;
+                }
+                Clan tojoin = clans.getClanById(id);
+                if(tojoin == null){
+                    sender.sendMessage(prefix().append("No clan by that id!").color(ChatColor.DARK_RED).create());
+                }
+                else{
+                    tojoin.addPlayer((ProxiedPlayer)sender);
+                    sender.sendMessage(prefix().append("Succesfully joined ").color(ChatColor.GREEN).append(tojoin.getName()).color(ChatColor.GOLD).create());
+                }
+            }
         }
     }
 }

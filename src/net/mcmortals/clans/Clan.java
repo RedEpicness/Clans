@@ -2,10 +2,14 @@ package net.mcmortals.clans;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class Clan{
 
+    private Main clans;
     private int coins;
     private String name;
     private String prefix;
@@ -14,14 +18,12 @@ public class Clan{
     //private ArrayList<Rank> ranks;
     //private Map<String, Rank> rankslist;
 
-    Clan(int coins, String name/*, String prefix*/, int id, boolean New){
+    public Clan(Main clans, int coins, String name/*, String prefix*/, int id){
+        this.clans = clans;
         this.coins = coins;
         this.id = id;
         this.name = name;
         //this.prefix = prefix;
-        if(New){
-            //TODO add clan to database
-        }
     }
 
     public ArrayList<String> getPlayers(){
@@ -44,13 +46,25 @@ public class Clan{
         return name;
     }
 
+    public boolean hasPlayer(ProxiedPlayer p){
+        return members.contains(p.getUUID());
+    }
+
     public boolean addPlayer(ProxiedPlayer p){
         if(members.contains(p.getUUID())){
             return false;
         }
         members.add(p.getUUID());
+        try{
+            Statement s = clans.c.createStatement();
+            s.executeQuery("INSERT INTO clanmembers VALUES (" + p.getName() + ", " + getId() + ");");
+            s.close();
+        }
+        catch(SQLException e){
+            clans.getLogger().log(Level.WARNING, e.getMessage());
+        }
+
         return true;
-        //TODO add database stuff here
     }
 
     public boolean kickPlayer(ProxiedPlayer p){
