@@ -40,10 +40,10 @@ public class ClanCommand extends net.md_5.bungee.api.plugin.Command{
                         .color(ChatColor.AQUA).append("Displays help for that command.").color(ChatColor.YELLOW).create());
                 sender.sendMessage(prefix().append("/clan create").color(ChatColor.GOLD).append(" - ")
                         .color(ChatColor.AQUA).append("Creates a clan.").color(ChatColor.YELLOW).create());
-                sender.sendMessage(prefix().append("/clan placeholder1").color(ChatColor.GOLD).append(" - ")
-                        .color(ChatColor.AQUA).append("placeholder1").color(ChatColor.YELLOW).create());
-                sender.sendMessage(prefix().append("/clan placeholder2").color(ChatColor.GOLD).append(" - ")
-                        .color(ChatColor.AQUA).append("placeholder2").color(ChatColor.YELLOW).create());
+                sender.sendMessage(prefix().append("/clan join").color(ChatColor.GOLD).append(" - ")
+                        .color(ChatColor.AQUA).append("Use to join a clan.").color(ChatColor.YELLOW).create());
+                sender.sendMessage(prefix().append("/clan info").color(ChatColor.GOLD).append(" - ")
+                        .color(ChatColor.AQUA).append("info").color(ChatColor.YELLOW).create());
                 sender.sendMessage(prefix().append("/clan placeholder3").color(ChatColor.GOLD).append(" - ")
                         .color(ChatColor.AQUA).append("placeholder3").color(ChatColor.YELLOW).create());
                 sender.sendMessage(prefix().append("--------------------").color(ChatColor.AQUA).create());
@@ -53,27 +53,27 @@ public class ClanCommand extends net.md_5.bungee.api.plugin.Command{
             if(arg2.equals("create")){
                 sender.sendMessage(prefix().append("----- ").color(ChatColor.AQUA).append("Clans help").color(ChatColor.GOLD).append(" - ")
                         .color(ChatColor.RED).append("create").color(ChatColor.AQUA).append(" -----").color(ChatColor.AQUA).create());
-                sender.sendMessage(prefix().append("Usage: ").color(ChatColor.GOLD).append("/guild create <name>")
+                sender.sendMessage(prefix().append("Usage: ").color(ChatColor.GOLD).append("/clan create <name>")
                         .color(ChatColor.AQUA).create());
                 sender.sendMessage(prefix().append("------------------------------").color(ChatColor.AQUA).create());
             }
             else if(arg2.equals("placeholder1")){
                 sender.sendMessage(prefix().append("----- ").color(ChatColor.AQUA).append("Clans help").color(ChatColor.GOLD).append(" - ")
-                        .color(ChatColor.RED).append("placeholder1").color(ChatColor.AQUA).append(" -----").color(ChatColor.AQUA).create());
-                sender.sendMessage(prefix().append("Usage: ").color(ChatColor.GOLD).append("/guild placeholder1")
+                        .color(ChatColor.RED).append("join").color(ChatColor.AQUA).append(" -----").color(ChatColor.AQUA).create());
+                sender.sendMessage(prefix().append("Usage: ").color(ChatColor.GOLD).append("/clan join <id>")
                         .color(ChatColor.AQUA).create());
                 sender.sendMessage(prefix().append("------------------------------").color(ChatColor.AQUA).create());
             }
-            else if(arg2.equals("placeholder2")){
+            else if(arg2.equals("info")){
                 sender.sendMessage(prefix().append("----- ").color(ChatColor.AQUA).append("Clans help").color(ChatColor.GOLD).append(" - ")
-                        .color(ChatColor.RED).append("placeholder1").color(ChatColor.AQUA).append(" -----").color(ChatColor.AQUA).create());
-                sender.sendMessage(prefix().append("Usage: ").color(ChatColor.GOLD).append("/guild placeholder2")
+                        .color(ChatColor.RED).append("info").color(ChatColor.AQUA).append(" -----").color(ChatColor.AQUA).create());
+                sender.sendMessage(prefix().append("Usage: ").color(ChatColor.GOLD).append("/clan info")
                         .color(ChatColor.AQUA).create());
                 sender.sendMessage(prefix().append("------------------------------").color(ChatColor.AQUA).create());
             }
             else if(arg2.equals("placeholder3")){
                 sender.sendMessage(prefix().append("----- ").color(ChatColor.AQUA).append("Clans help").color(ChatColor.GOLD).append(" - ")
-                        .color(ChatColor.RED).append("placeholder1").color(ChatColor.AQUA).append(" -----").color(ChatColor.AQUA).create());
+                        .color(ChatColor.RED).append("placeholder3").color(ChatColor.AQUA).append(" -----").color(ChatColor.AQUA).create());
                 sender.sendMessage(prefix().append("Usage: ").color(ChatColor.GOLD).append("/guild placeholder3")
                         .color(ChatColor.AQUA).create());
                 sender.sendMessage(prefix().append("------------------------------").color(ChatColor.AQUA).create());
