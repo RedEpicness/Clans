@@ -1,9 +1,5 @@
 package net.mcmortals.clans;
 
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-
-import java.util.ArrayList;
-
 public class Clan{
 
     private int coins;
@@ -25,7 +21,7 @@ public class Clan{
         }
     }
 
-    public ArrayList<String> getPlayers(){
+    /*public ArrayList<String> getPlayers(){
         return members;
     }
 
@@ -37,7 +33,7 @@ public class Clan{
         return id;
     }
 
-    public String getPrefix(){
+    /*public String getPrefix(){
         return prefix;
     }
 
@@ -60,6 +56,6 @@ public class Clan{
             return true;
         }
         return false;
-    }
+    }*/
 
 }
