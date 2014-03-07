@@ -1,27 +1,30 @@
 package net.mcmortals.clans;
 
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+
+import java.util.ArrayList;
+
 public class Clan{
 
     private int coins;
     private String name;
-    //private String prefix;
+    private String prefix;
     private int id;
-    //private ArrayList<String> members;
+    private ArrayList<String> members = new ArrayList<String>();
     //private ArrayList<Rank> ranks;
     //private Map<String, Rank> rankslist;
 
-    Clan(int coins, String name/*, String prefix*/, int id/*, ArrayList<String> members*/, boolean New){
+    Clan(int coins, String name/*, String prefix*/, int id, boolean New){
         this.coins = coins;
         this.id = id;
         this.name = name;
-        //this.members = members;
         //this.prefix = prefix;
         if(New){
             //TODO add clan to database
         }
     }
 
-    /*public ArrayList<String> getPlayers(){
+    public ArrayList<String> getPlayers(){
         return members;
     }
 
@@ -33,7 +36,7 @@ public class Clan{
         return id;
     }
 
-    /*public String getPrefix(){
+    public String getPrefix(){
         return prefix;
     }
 
@@ -47,7 +50,7 @@ public class Clan{
         }
         members.add(p.getUUID());
         return true;
-        //TODO add database stuff here, bock
+        //TODO add database stuff here
     }
 
     public boolean kickPlayer(ProxiedPlayer p){
@@ -56,6 +59,6 @@ public class Clan{
             return true;
         }
         return false;
-    }*/
+    }
 
 }

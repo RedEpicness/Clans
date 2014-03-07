@@ -22,8 +22,8 @@ public class Main extends Plugin{
         try{
             Statement statement = c.createStatement();
             statement.executeQuery("CREATE TABLE IF NOT EXISTS 'clanlist' ('id' int, 'Name' varchat(20), 'Coins' int);");
+            statement.executeQuery("CREATE TABLE IF NOT EXISTS 'clanmembers' ('id' int, 'Name' varchat(16), 'GuildId' int);");
             ResultSet res = statement.executeQuery("SELECT id FROM clanlist");
-            Array ids = res.getArray("id");
             int count = 0;
             while(res.next()) count++;
             count--;
@@ -33,6 +33,11 @@ public class Main extends Plugin{
                 int Coins = res1.getInt("Coins");
                 clans.add(count, new Clan(Coins, name, count, false));
             }
+            ResultSet res2 = statement.executeQuery("SELECT GuildId FROM clanmembers");
+            do{
+                ResultSet res3 = statement.executeQuery("SELECT * FROM clanmembers");
+                clans.get(res3.getInt("GuildId")).addPlayer(getProxy().getPlayer(res.getString("Name")));
+            }while(res2.next());
         }
         catch(SQLException e){
             getLogger().log(Level.WARNING, e.getMessage());
