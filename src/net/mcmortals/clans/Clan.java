@@ -8,18 +8,18 @@ public class Clan{
 
     private int coins;
     private String name;
-    private String prefix;
+    //private String prefix;
     private int id;
-    private ArrayList<String> members;
+    //private ArrayList<String> members;
     //private ArrayList<Rank> ranks;
     //private Map<String, Rank> rankslist;
 
-    Clan(int coins, String name, String prefix, int id, ArrayList<String> members, boolean New){
+    Clan(int coins, String name/*, String prefix*/, int id/*, ArrayList<String> members*/, boolean New){
         this.coins = coins;
         this.id = id;
         this.name = name;
-        this.members = members;
-        this.prefix = prefix;
+        //this.members = members;
+        //this.prefix = prefix;
         if(New){
             //TODO add clan to database
         }

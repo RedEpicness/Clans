@@ -4,19 +4,41 @@ import net.mcmortals.clans.commands.ClanCommand;
 import net.mcmortals.clans.mysql.MySQL;
 import net.md_5.bungee.api.plugin.Plugin;
 
-import java.sql.Connection;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class Main extends Plugin{
 
     MySQL sql;
     Connection c;
+    ArrayList<Clan> clans = new ArrayList<Clan>();
 
     @Override
     public void onEnable(){
-        sql = new MySQL(this, "127.0.0.0", "23456", "database", "user", "pass");
+        sql = new MySQL(this);
         c = sql.openConnection();
         getProxy().getPluginManager().registerCommand(this, new ClanCommand(this));
-        //TODO add all clans from databases into an array maybe, and create all guild objects
+        try{
+            Statement statement = c.createStatement();
+            statement.executeQuery("CREATE TABLE IF NOT EXISTS 'clanlist' ('id' int, 'Name' varchat(20), 'Coins' int);");
+            ResultSet res = statement.executeQuery("SELECT id FROM clanlist");
+            Array ids = res.getArray("id");
+            int count = 0;
+            while(res.next()) count++;
+            count--;
+            for(int a = count;0 <= count;count-- ){
+                ResultSet res1 = statement.executeQuery("SELECT * FROM clanlist WHERE id="+count+";");
+                String name = res1.getString("Name");
+                int Coins = res1.getInt("Coins");
+                clans.add(count, new Clan(Coins, name, count, false));
+            }
+        }
+        catch(SQLException e){
+            getLogger().log(Level.WARNING, e.getMessage());
+            return;
+        }
+
     }
 
 }

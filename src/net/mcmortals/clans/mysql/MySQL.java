@@ -12,12 +12,6 @@ import java.util.logging.Level;
  * @author tips48
  */
 public class MySQL extends Database {
-    private final String user;
-    private final String database;
-    private final String password;
-    private final String port;
-    private final String hostname;
-
     private Connection connection;
 
     /**
@@ -25,24 +19,9 @@ public class MySQL extends Database {
      * 
      * @param plugin
      *            Plugin instance
-     * @param hostname
-     *            Name of the host
-     * @param port
-     *            Port number
-     * @param database
-     *            Database name
-     * @param username
-     *            Username
-     * @param password
-     *            Password
      */
-    public MySQL(Plugin plugin, String hostname, String port, String database, String username, String password) {
+    public MySQL(Plugin plugin) {
         super(plugin);
-        this.hostname = hostname;
-        this.port = port;
-        this.database = database;
-        this.user = username;
-        this.password = password;
         this.connection = null;
     }
 
@@ -50,7 +29,7 @@ public class MySQL extends Database {
     public Connection openConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://" + this.hostname + ":" + this.port + "/" + this.database, this.user, this.password);
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/mcmortals?user=root&password=****");
         } catch (SQLException e) {
             plugin.getLogger().log(Level.SEVERE, "Could not connect to MySQL server! because: " + e.getMessage());
         } catch (ClassNotFoundException e) {
