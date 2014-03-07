@@ -126,8 +126,13 @@ public class ClanCommand extends net.md_5.bungee.api.plugin.Command{
                     sender.sendMessage(prefix().append("No clan by that id!").color(ChatColor.DARK_RED).create());
                 }
                 else{
-                    tojoin.addPlayer((ProxiedPlayer)sender);
-                    sender.sendMessage(prefix().append("Succesfully joined ").color(ChatColor.GREEN).append(tojoin.getName()).color(ChatColor.GOLD).create());
+                    if(!tojoin.hasPlayer((ProxiedPlayer)sender)){
+                        tojoin.addPlayer((ProxiedPlayer)sender);
+                        sender.sendMessage(prefix().append("Succesfully joined ").color(ChatColor.GREEN).append(tojoin.getName()).color(ChatColor.GOLD).create());
+                    }
+                    else{
+                        sender.sendMessage(prefix().append("You're already in this guild!").color(ChatColor.RED).create());
+                    }
                 }
             }
         }
