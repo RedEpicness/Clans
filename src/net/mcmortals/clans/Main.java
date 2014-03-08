@@ -18,6 +18,7 @@ public class Main extends Plugin{
     MySQL sql;
     public Connection c;
     public ArrayList<Clan> clans = new ArrayList<Clan>();
+    public ArrayList<ClanMember> clanmembers = new ArrayList<ClanMember>();
 
     @Override
     public void onEnable(){
@@ -28,26 +29,29 @@ public class Main extends Plugin{
         getProxy().getPluginManager().registerCommand(this, new ClansCommand(this));
         try{
             Statement statement = c.createStatement();
-            statement.executeQuery("CREATE TABLE IF NOT EXISTS 'clanlist' ('id' int, 'Name' varchat(20), 'Coins' int);");
-            statement.executeQuery("CREATE TABLE IF NOT EXISTS 'clanmembers' ('Name' varchat(16), 'GuildId' int);");
-            ResultSet res = statement.executeQuery("SELECT id FROM clanlist");
-            int count = 0;
-            do count++; while(res.next());
-            for(int a = count-1;0 <= count;count-- ){
-                ResultSet res1 = statement.executeQuery("SELECT * FROM clanlist WHERE id="+count+";");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS clanlist (id int, Name text, Coins int);");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS clanmembers (Name text, ClanId int, UUID text);");
+            ResultSet res = statement.executeQuery("SELECT * FROM clanlist");
+            do{
+                ResultSet res1 = statement.executeQuery("SELECT * FROM clanlist;");
                 String name = res1.getString("Name");
                 int Coins = res1.getInt("Coins");
-                clans.add(count, new Clan(this, Coins, name, count));
+                int id = res1.getInt("id");
+                clans.set(id, new Clan(this, Coins, name, id));
             }
-            ResultSet res2 = statement.executeQuery("SELECT GuildId FROM clanmembers");
+            while(res.next());
+            ResultSet res2 = statement.executeQuery("SELECT * FROM clanmembers");
             do{
                 ResultSet res3 = statement.executeQuery("SELECT * FROM clanmembers");
-                clans.get(res3.getInt("GuildId")).addPlayer(getProxy().getPlayer(res.getString("Name")));
+                clans.get(res3.getInt("ClanId")).addPlayer(getProxy().getPlayer(res.getString("Name")));
+                ClanMember m = new ClanMember(this, res3.getInt("ClanId"), res3.getString("Name"), res3.getString("UUID"));
+                clanmembers.add(m);
             }while(res2.next());
             statement.close();
         }
         catch(SQLException e){
             getLogger().log(Level.WARNING, e.getMessage());
+            e.printStackTrace();
         }
 
     }
@@ -55,23 +59,27 @@ public class Main extends Plugin{
     @Override
     public void onDisable(){
         try{
-            Statement s = c.createStatement();
-            s.executeQuery("DELETE FROM clanlist;");
-            s.executeQuery("DELETE FROM clanmembers;");
-            s.close();
+            c.close();
         }
-        catch(SQLException e){
-            getLogger().log(Level.WARNING, e.getMessage());
-        }
+        catch(SQLException e){}
     }
 
     public Clan getClanById(int id){
         try{
             return clans.get(id);
         }
-        catch(NullPointerException e){
+        catch(IndexOutOfBoundsException e){
             return null;
         }
+    }
+
+    public ClanMember getClanMemberByUUID(String UUID){
+        for (ClanMember a : clanmembers){
+            if(a.getUUID().equals(UUID)){
+                return a;
+            }
+        }
+        return null;
     }
 
 }

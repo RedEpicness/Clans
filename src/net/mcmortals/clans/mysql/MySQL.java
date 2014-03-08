@@ -30,7 +30,7 @@ public class MySQL extends Database {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             //connection = DriverManager.getConnection("jdbc:mysql://localhost/mcmortals?user=root&password=****");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/mcmortals?user=root&password=****");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/mysql?user=root&password=");
         } catch (SQLException e) {
             plugin.getLogger().log(Level.SEVERE, "Could not connect to MySQL server! because: " + e.getMessage());
         } catch (ClassNotFoundException e) {
@@ -60,58 +60,4 @@ public class MySQL extends Database {
             }
         }
     }
-
-    public ResultSet querySQL(String query) {
-        Connection c;
-
-        if (checkConnection()) {
-            c = getConnection();
-        } else {
-            c = openConnection();
-        }
-
-        Statement s = null;
-
-        try {
-            s = c.createStatement();
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
-
-        ResultSet ret = null;
-
-        try {
-            ret = s.executeQuery(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        closeConnection();
-
-        return ret;
-    }
-
-    public void updateSQL(String update) {
-
-        Connection c;
-
-        if (checkConnection()) {
-            c = getConnection();
-        } else {
-            c = openConnection();
-        }
-
-        Statement s;
-
-        try {
-            s = c.createStatement();
-            s.executeUpdate(update);
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
-
-        closeConnection();
-
-    }
-
 }

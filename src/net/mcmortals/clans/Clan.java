@@ -16,7 +16,6 @@ public class Clan{
     private int id;
     private ArrayList<String> members = new ArrayList<String>();
     //private ArrayList<Rank> ranks;
-    //private Map<String, Rank> rankslist;
 
     public Clan(Main clans, int coins, String name/*, String prefix*/, int id){
         this.clans = clans;
@@ -54,24 +53,36 @@ public class Clan{
         if(members.contains(p.getUUID())){
             return false;
         }
+        else if(clans.getClanMemberByUUID(p.getUUID()) != null){
+            return false;
+        }
         members.add(p.getUUID());
         try{
             Statement s = clans.c.createStatement();
-            s.executeQuery("INSERT INTO clanmembers VALUES (" + p.getName() + ", " + getId() + ");");
+            s.executeUpdate("INSERT INTO clanmembers VALUES ('"+p.getName()+"', "+getId()+", '"+p.getUUID()+"');");
             s.close();
         }
         catch(SQLException e){
             clans.getLogger().log(Level.WARNING, e.getMessage());
         }
-
+        clans.clanmembers.add(new ClanMember(clans, getId(), p.getName(), p.getUUID()));
         return true;
     }
 
     public boolean kickPlayer(ProxiedPlayer p){
-        if(members.contains(p.getUUID())){
-            members.add(p.getUUID());
-            return true;
+        if(!members.contains(p.getUUID())){
+            return false;
         }
+        try{
+            Statement s = clans.c.createStatement();
+            s.executeUpdate("DELETE FROM clanmembers WHERE Name='"+p.getName()+"';");
+            s.close();
+        }
+        catch(SQLException e){
+            clans.getLogger().log(Level.WARNING, e.getMessage());
+        }
+        members.remove(p.getUUID());
+        clans.clanmembers.remove(clans.getClanMemberByUUID(p.getUUID()));
         return false;
     }
 
