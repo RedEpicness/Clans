@@ -47,6 +47,7 @@ public class ClanCommand extends net.md_5.bungee.api.plugin.Command{
         else if(arg1.equals("info")){
             info(sender);
         }
+        else help(sender);
     }
 
     void help(CommandSender sender, String[] args){
@@ -60,9 +61,9 @@ public class ClanCommand extends net.md_5.bungee.api.plugin.Command{
             sender.sendMessage(prefix().append("/clan join").color(ChatColor.GOLD).append(" - ")
                     .color(ChatColor.AQUA).append("Use to join a clan.").color(ChatColor.YELLOW).create());
             sender.sendMessage(prefix().append("/clan info").color(ChatColor.GOLD).append(" - ")
-                    .color(ChatColor.AQUA).append("info").color(ChatColor.YELLOW).create());
+                    .color(ChatColor.AQUA).append("Shows information about your clan.").color(ChatColor.YELLOW).create());
             sender.sendMessage(prefix().append("/clan leave").color(ChatColor.GOLD).append(" - ")
-                    .color(ChatColor.AQUA).append("leave").color(ChatColor.YELLOW).create());
+                    .color(ChatColor.AQUA).append("Leaves your current clan.").color(ChatColor.YELLOW).create());
             sender.sendMessage(prefix().append("--------------------").color(ChatColor.AQUA).create());
             return;
         }
@@ -98,6 +99,22 @@ public class ClanCommand extends net.md_5.bungee.api.plugin.Command{
         else{
             sender.sendMessage(prefix().append("Unknown argument: ").color(ChatColor.RED).append(arg2).color(ChatColor.AQUA).create());
         }
+    }
+
+    void help(CommandSender sender){
+        sender.sendMessage(prefix().append("----- ").color(ChatColor.AQUA).append("Clans help")
+                .color(ChatColor.GOLD).append(" -----").color(ChatColor.AQUA).create());
+        sender.sendMessage(prefix().append("/clan help <command>").color(ChatColor.GOLD).append(" - ")
+                .color(ChatColor.AQUA).append("Displays help for that command.").color(ChatColor.YELLOW).create());
+        sender.sendMessage(prefix().append("/clan create").color(ChatColor.GOLD).append(" - ")
+                .color(ChatColor.AQUA).append("Creates a clan.").color(ChatColor.YELLOW).create());
+        sender.sendMessage(prefix().append("/clan join").color(ChatColor.GOLD).append(" - ")
+                .color(ChatColor.AQUA).append("Use to join a clan.").color(ChatColor.YELLOW).create());
+        sender.sendMessage(prefix().append("/clan info").color(ChatColor.GOLD).append(" - ")
+                .color(ChatColor.AQUA).append("info").color(ChatColor.YELLOW).create());
+        sender.sendMessage(prefix().append("/clan leave").color(ChatColor.GOLD).append(" - ")
+                .color(ChatColor.AQUA).append("leave").color(ChatColor.YELLOW).create());
+        sender.sendMessage(prefix().append("--------------------").color(ChatColor.AQUA).create());
     }
 
     void create(CommandSender sender, String[] args){
