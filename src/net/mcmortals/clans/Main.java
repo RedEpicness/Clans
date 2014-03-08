@@ -20,8 +20,6 @@ public class Main extends Plugin{
     public ArrayList<Clan> clans = new ArrayList<Clan>();
     public ArrayList<ClanMember> clanmembers = new ArrayList<ClanMember>();
 
-    //testing?
-
     @Override
     public void onEnable(){
         sql = new MySQL(this);
