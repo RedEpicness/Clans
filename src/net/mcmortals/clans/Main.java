@@ -7,11 +7,7 @@ import net.mcmortals.clans.mysql.MySQL;
 import net.md_5.bungee.api.plugin.Plugin;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 public class Main extends Plugin{
 
@@ -27,7 +23,7 @@ public class Main extends Plugin{
         getProxy().getPluginManager().registerCommand(this, new ClanCommand(this));
         getProxy().getPluginManager().registerCommand(this, new cCommand(this));
         getProxy().getPluginManager().registerCommand(this, new ClansCommand(this));
-        try{
+        /*try{
             Statement statement = c.createStatement();
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS clanlist (id int, Name text, Coins int);");
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS clanmembers (Name text, ClanId int, UUID text);");
@@ -52,16 +48,7 @@ public class Main extends Plugin{
         catch(SQLException e){
             getLogger().log(Level.WARNING, e.getMessage());
             e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void onDisable(){
-        try{
-            c.close();
-        }
-        catch(SQLException e){}
+        }*/
     }
 
     public Clan getClanById(int id){
